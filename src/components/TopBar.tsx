@@ -37,8 +37,6 @@ export default function TopBar({title,icon,inputSearch,setInputSearch,setSlider 
       {icon==="bookmark"&& (
         <TouchableOpacity onPress={()=>setSlider(true)}>
           <Text>Bookmark</Text>
-          <Ionicons name="bookmark" size={24} color="black" />
-
         </TouchableOpacity>
       )}
     </View>

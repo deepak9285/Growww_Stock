@@ -5,7 +5,7 @@ import axios from "axios";
 import ChartData from "../components/ChartData";
 import { LineChart } from "react-native-chart-kit";
 import TopBar from "../components/TopBar";
-import WatchlistsSlider from "../components/WatchlistsSlider";
+
 import WatchlistModal from "../components/WatchlistModel";
 
 const screenWidth = Dimensions.get("window").width;
