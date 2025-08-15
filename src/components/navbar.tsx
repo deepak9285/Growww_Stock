@@ -40,14 +40,14 @@ const Navbar = ({ currentScreen, setCurScreen }: any) => {
 
 const navItems = [
   {
-    key: 'explore',
+    key: 'ExploreScreen',
     label: 'Explore',
     iconActive: 'compass',
     iconInactive: 'compass-outline',
   },
   {
-    key: 'watchlist',
-    label: 'Watchlist',
+    key: 'WatchlistsScreen',
+    label: 'Watchlists',
     iconActive: 'star',
     iconInactive: 'star-outline',
   },

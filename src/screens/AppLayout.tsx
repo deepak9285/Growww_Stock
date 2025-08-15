@@ -5,21 +5,22 @@ import ExploreScreen from './ExploreScreen';
 import WatchlistsScreen from './WatchlistsScreen';
 import ProductScreen from './ProductScreen';
 import ViewAllScreen from './ViewAllScreen';
+import TopBar from '../components/TopBar';
 
 const AppLayout = ({navigation}) => {
-  //   const [modalVisible, setModalVisible] = useState(false);
-  //   const [inputSearch, setInputSearch] = useState('');
+
+    const [inputSearch, setInputSearch] = useState('');
   const [curScreen, setCurScreen] = useState<
-    'explore' | 'watchlist' | 'product' | 'viewall' 
-  >('explore');
+    'ExploreScreen' | 'WatchlistsScreen' | 'ProductScreen' | 'ViewallScreen' 
+  >('ExploreScreen');
+  
 
   return (
     <View style={styles.container}>
+     
       <View style={styles.content}>
-        {curScreen === 'explore' && <ExploreScreen />}
-        {curScreen === 'watchlist' && <WatchlistsScreen />}
-        {curScreen === 'product' && <ProductScreen navigation={navigation} route={{}}/>}
-        {curScreen === 'viewall' && <ViewAllScreen navigation={navigation} route={{}}/>}
+        {curScreen === 'ExploreScreen' && <ExploreScreen />}
+        {curScreen === 'WatchlistsScreen' && <WatchlistsScreen />}
       </View>
 
       {/* Navbar */}

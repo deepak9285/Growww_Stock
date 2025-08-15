@@ -8,6 +8,8 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 import { colors, spacing } from '../theme';
 import { useWatchlists } from '../store/watchlists';
@@ -18,7 +20,7 @@ type Props = {
   symbol: string;
 };
 
-export default function WatchlistModal({ visible, onClose, symbol }: Props) {
+export default function WatchlistModal({ visible, setSlider, onClose, symbol }: Props) {
   const { lists, createList, addSymbol } = useWatchlists();
   const [newListName, setNewListName] = useState('');
 
@@ -42,63 +44,25 @@ export default function WatchlistModal({ visible, onClose, symbol }: Props) {
       onRequestClose={onClose}
     >
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: colors.card,
-              padding: spacing.lg,
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
-              maxHeight: '70%',
-            }}
-          >
-            <Text
-              style={{
-                color: colors.text,
-                fontSize: 18,
-                fontWeight: '700',
-                marginBottom: spacing.md,
-              }}
-            >
-              Add to Watchlist
-            </Text>
-
-            {/* Create new watchlist */}
-            <View style={{ flexDirection: 'row', marginBottom: spacing.md }}>
+        <View style={styles.overlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Add to Watchlist</Text>
+            <TouchableOpacity onPress={()=>setSlider(false)}>
+              <Text>Close</Text>
+            </TouchableOpacity>
+            <View style={styles.createRow}>
               <TextInput
                 placeholder="New watchlist name"
                 placeholderTextColor={colors.subtext}
                 value={newListName}
                 onChangeText={setNewListName}
-                style={{
-                  flex: 1,
-                  borderWidth: 1,
-                  borderColor: colors.border,
-                  borderRadius: 8,
-                  paddingHorizontal: spacing.sm,
-                  color: colors.text,
-                }}
+                style={styles.input}
               />
-              <Pressable
-                onPress={handleCreate}
-                style={{
-                  marginLeft: spacing.sm,
-                  backgroundColor: colors.success,
-                  paddingHorizontal: spacing.md,
-                  justifyContent: 'center',
-                  borderRadius: 8,
-                }}
-              >
-                <Text style={{ color: '#fff', fontWeight: '600' }}>Add</Text>
+              <Pressable onPress={handleCreate} style={styles.addButton}>
+                <Text style={styles.addButtonText}>Add</Text>
               </Pressable>
             </View>
 
@@ -110,37 +74,21 @@ export default function WatchlistModal({ visible, onClose, symbol }: Props) {
                 renderItem={({ item }) => (
                   <Pressable
                     onPress={() => handleSelectList(item.id)}
-                    style={{
-                      paddingVertical: spacing.sm,
-                      borderBottomWidth: 1,
-                      borderBottomColor: colors.border,
-                    }}
+                    style={styles.listItem}
                   >
-                    <Text style={{ color: colors.text, fontSize: 16 }}>
-                      {item.name}
-                    </Text>
+                    <Text style={styles.listItemText}>{item.name}</Text>
                   </Pressable>
                 )}
               />
             ) : (
-              <Text style={{ color: colors.subtext }}>
+              <Text style={styles.emptyText}>
                 No watchlists yet. Create one above.
               </Text>
             )}
 
             {/* Close button */}
-            <Pressable
-              onPress={onClose}
-              style={{
-                marginTop: spacing.md,
-                paddingVertical: spacing.sm,
-                borderWidth: 1,
-                borderColor: colors.border,
-                borderRadius: 8,
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ color: colors.subtext }}>Cancel</Text>
+            <Pressable onPress={onClose} style={styles.cancelButton}>
+              <Text style={styles.cancelText}>Cancel</Text>
             </Pressable>
           </View>
         </View>
@@ -148,3 +96,72 @@ export default function WatchlistModal({ visible, onClose, symbol }: Props) {
     </Modal>
   );
 }
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)', // less opacity than before
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#fff', // solid modal background
+    padding: spacing.lg,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    maxHeight: '70%',
+  },
+  title: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: spacing.md,
+  },
+  createRow: {
+    flexDirection: 'row',
+    marginBottom: spacing.md,
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 8,
+    paddingHorizontal: spacing.sm,
+    color: colors.text,
+  },
+  addButton: {
+    marginLeft: spacing.sm,
+    backgroundColor: colors.success,
+    paddingHorizontal: spacing.md,
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  listItem: {
+    paddingVertical: spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  listItemText: {
+    color: colors.text,
+    fontSize: 16,
+  },
+  emptyText: {
+    color: colors.subtext,
+  },
+  cancelButton: {
+    marginTop: spacing.md,
+    paddingVertical: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  cancelText: {
+    color: colors.subtext,
+  },
+});

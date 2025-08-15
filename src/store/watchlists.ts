@@ -1,5 +1,8 @@
+
+
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 type Watchlist = { id: string; name: string; symbols: string[]; createdAt: number };
 
@@ -12,26 +15,50 @@ type State = {
   hydrate: () => Promise<void>;
 };
 
+const generateId = () => {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
+};
+
 const STORAGE_KEY = 'WATCHLISTS_V1';
 
 export const useWatchlists = create<State>((set, get) => ({
   lists: [],
 
-  createList: (name) =>
+  createList: (name) => {
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      Alert.alert('Invalid Name', 'Watchlist name cannot be empty.');
+      return;
+    }
+    const alreadyExists = get().lists.some(
+      (list) => list.name.toLowerCase() === trimmedName.toLowerCase()
+    );
+
+    if (alreadyExists) {
+      Alert.alert('Duplicate Watchlist', 'A watchlist with this name already exists.');
+      return;
+    }
+
     set((state) => ({
       lists: [
         ...state.lists,
-        { id: crypto.randomUUID(), name, symbols: [], createdAt: Date.now() },
+        { id: generateId(), name: trimmedName, symbols: [], createdAt: Date.now() },
       ],
-    })),
+    }));
+  },
 
   addSymbol: (listId, symbol) =>
     set((state) => ({
-      lists: state.lists.map((l) =>
-        l.id === listId && !l.symbols.includes(symbol)
-          ? { ...l, symbols: [...l.symbols, symbol] }
-          : l
-      ),
+      lists: state.lists.map((l) => {
+        if (l.id === listId) {
+          if (l.symbols.includes(symbol)) {
+            Alert.alert('Already Present', `${symbol} is already in this watchlist.`);
+            return l;
+          }
+          return { ...l, symbols: [...l.symbols, symbol] };
+        }
+        return l;
+      }),
     })),
 
   removeSymbol: (listId, symbol) =>
@@ -53,7 +80,6 @@ export const useWatchlists = create<State>((set, get) => ({
   },
 }));
 
-// Persist to storage
 useWatchlists.subscribe(async (state) => {
   await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state.lists));
 });
