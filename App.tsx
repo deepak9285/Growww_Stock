@@ -117,25 +117,25 @@
 
 // export default App;
 
-
-import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {StatusBar} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import RootNavigator from './src/navigation/RootNavigator';
-import { useWatchlists } from './src/store/watchlists';
-
+import {useWatchlists} from './src/store/watchlists';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 export default function App() {
-  const { hydrate } = useWatchlists();
+  const {hydrate} = useWatchlists();
 
   useEffect(() => {
     hydrate();
   }, [hydrate]);
 
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="light-content" backgroundColor="black" />
-      <RootNavigator />
-    </NavigationContainer>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer>
+        <StatusBar barStyle="light-content" backgroundColor="black" />
+        <RootNavigator />
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
-

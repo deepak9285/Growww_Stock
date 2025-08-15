@@ -1,7 +1,11 @@
 import { View, Text,TextInput,StyleSheet ,TouchableOpacity} from 'react-native'
 import React,{useState} from 'react'
+//import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default function TopBar({title,icon,inputSearch,setInputSearch,setSlider ,fetchSearchResults}) {
+export default function TopBar({title,icon,inputSearch,setInputSearch,setSlider , inWatchlist,fetchSearchResults}) {
+  console.log("inwatchlist",inWatchlist);
+
   return (
     <View style={{
         display: 'flex',
@@ -30,13 +34,20 @@ export default function TopBar({title,icon,inputSearch,setInputSearch,setSlider 
           onChangeText={text => setInputSearch(text)}
         />
         <TouchableOpacity onPress={()=>fetchSearchResults(inputSearch)}>
-          <Text>Search</Text>
+          <MaterialIcons name='search' size={24} color='#000' />
+
         </TouchableOpacity>
 
       </View>) }
       {icon==="bookmark"&& (
         <TouchableOpacity onPress={()=>setSlider(true)}>
-          <Text>Bookmark</Text>
+          {/* <Text>Bookmark</Text> */}
+           <MaterialIcons
+        name={inWatchlist ? "bookmark" : "bookmark-border"}
+        size={24}
+        color={inWatchlist ? "#FFD000" : "#909090"}
+        onPress={() => setSlider(true)} // open modal to manage watchlist
+      />
         </TouchableOpacity>
       )}
     </View>

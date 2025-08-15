@@ -5,41 +5,43 @@ import axios from "axios";
 import ChartData from "../components/ChartData";
 import { LineChart } from "react-native-chart-kit";
 import TopBar from "../components/TopBar";
+import { useWatchlists } from "../store/watchlists";
 
 import WatchlistModal from "../components/WatchlistModel";
+import Graph from "../components/Graph";
 
 const screenWidth = Dimensions.get("window").width;
  
 export default function ProductScreen({ route }) {
-  const { symbol } = route.params; // symbol passed from product list
-  console.log("symbol",symbol)
+  const { symbol } = route.params; 
+
   
+const hydrate = useWatchlists((state) => state.hydrate);
+  const isInAnyList = useWatchlists((state) => state.isInAnyList);
+
+  const inWatchlist = isInAnyList(symbol); // directly read from store
+
+  useEffect(() => {
+    hydrate(); // load AsyncStorage data on mount
+  }, []);
 
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [slider,setSlider]=useState(false);
- const rawData = {
-    "2025-08-14 19:55:00": { "1. open": "237.4995", "2. high": "237.6000", "3. low": "237.4500", "4. close": "237.5988", "5. volume": "419" },
-    "2025-08-14 19:50:00": { "1. open": "237.5000", "2. high": "237.6000", "3. low": "237.4500", "4. close": "237.5000", "5. volume": "1045" },
-    "2025-08-14 19:45:00": { "1. open": "237.5884", "2. high": "237.6000", "3. low": "237.4500", "4. close": "237.6000", "5. volume": "1011" },
-  };
-  const chartData = parseStockData(rawData);
-  const { width } = Dimensions.get('window');
+  const [GraphData,setGraphData]=useState(null);
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         // Fetch company info
         const res = await axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo`);
 
-        console.log("res",res.data)
+      
 
         setCompanyData(res.data);
 
-        // Fetch historical prices for chart
-        const chartRes = await axios.get(`https://your-api.com/company-chart?symbol=${symbol}`);
-        const prices = chartRes.data.map(item => parseFloat(item.close));
-        // setChartData(prices);
-
+       
+        const chartRes = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo`);
+         setGraphData(chartRes.data['Time Series (5min)']);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -70,7 +72,7 @@ export default function ProductScreen({ route }) {
     <>
     <ScrollView style={styles.container}>
       {/* Header */}
-      <TopBar title={'ProductScreen'} icon={'bookmark'} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
+      <TopBar title={'ProductScreen'} icon={'bookmark'} isInWatchlist={inWatchlist} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
       <View style={styles.header}>
         <Image
           source={{
@@ -92,8 +94,8 @@ export default function ProductScreen({ route }) {
         </View>
       </View>
      <Text style={styles.title}>Stock Price Line Chart</Text>
-     <ChartData data={chartData} width={width - 100} height={250} />
-      {/* About */}
+     {/* <ChartData data={chartData} width={width - 100} height={250} /> */}
+      <Graph symbol={symbol} GraphData={GraphData}/>
       <Text style={styles.sectionTitle}>About {companyData?.Name}</Text>
       <Text style={styles.description}>{companyData?.Description}</Text>
 
