@@ -3,7 +3,6 @@ import {
   View, 
   Text, 
   FlatList, 
-
   StyleSheet, 
   TouchableOpacity,
   SafeAreaView,
@@ -29,8 +28,6 @@ export default function Watchlist({ route }) {
   const { removeSymbol } = useWatchlists();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { theme } = useContext(ThemeContext);
-  const StockItems=AsyncStorage.getItem('https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=demo');
- console.log("sdf",StockItems);
   const handleRemove = (sym: string) => {
     setSymbols((prev) => prev.filter((s) => s !== sym));
     removeSymbol(item.id, sym);
@@ -59,7 +56,6 @@ export default function Watchlist({ route }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Header with Back Button */}
       <View style={[styles.headerContainer, { borderBottomColor: theme.border }]}>
         <TouchableOpacity 
           style={styles.backButton}
@@ -68,7 +64,6 @@ export default function Watchlist({ route }) {
         >
           <MaterialIcons name="arrow-back" size={24} color={theme.text} />
         </TouchableOpacity>
-        
         <View style={styles.headerContent}>
           <Text style={[styles.headerTitle, { color: theme.text }]}>
             {item.name}
@@ -78,18 +73,8 @@ export default function Watchlist({ route }) {
           </Text>
         </View>
 
-        <View style={styles.headerActions}>
-          <TouchableOpacity 
-            style={[styles.actionButton, { backgroundColor: theme.surface }]}
-            onPress={() => {/* Add edit functionality */}}
-            activeOpacity={0.7}
-          >
-            <MaterialIcons name="edit" size={20} color={theme.text} />
-          </TouchableOpacity>
-        </View>
       </View>
 
-      {/* Content */}
       <View style={styles.content}>
         {symbols.length > 0 ? (
           <FlatList
@@ -115,7 +100,7 @@ export default function Watchlist({ route }) {
             />
             <TouchableOpacity 
               style={[styles.addButton, { backgroundColor: theme.primary }]}
-              onPress={() => nav.navigate('Search')} // Navigate to search/add stocks
+              onPress={() => nav.navigate('ExploreScreen')} 
               activeOpacity={0.8}
             >
               <MaterialIcons name="add" size={20} color="#fff" />
@@ -127,7 +112,6 @@ export default function Watchlist({ route }) {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

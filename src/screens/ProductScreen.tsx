@@ -1,22 +1,17 @@
 import React, { useEffect, useState,useContext } from "react";
-import { View, Text, ScrollView, StyleSheet, Image, ActivityIndicator, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Image, ActivityIndicator} from "react-native";
 import axios from "axios";
 import TopBar from "../components/TopBar";
 import { useWatchlists } from "../store/watchlists";
-
 import WatchlistModal from "../components/WatchlistModel";
 import {ThemeContext} from '../contexts/themeContext';
 import { useNavigation } from "@react-navigation/native";
-
 import Graph from "../components/Graph";
-import MaterialIcons from "@react-native-vector-icons/material-icons";
- 
 export default function ProductScreen({ route }) {
   const { symbol } = route.params; 
  const[inWatchlist,setInWatchlist]=useState(false);
    const {isInAnyList}=useWatchlists();
    const{theme}=useContext(ThemeContext);
-
    useEffect(() => {
     setInWatchlist(isInAnyList(symbol));
   }, [symbol, isInAnyList]);
@@ -28,9 +23,9 @@ export default function ProductScreen({ route }) {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const res = await axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo`);
+        const res = await axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=0891QCPUCG9GPJTT`);
         setCompanyData(res.data);
-        const chartRes = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo`);
+        const chartRes = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=0891QCPUCG9GPJTT`);
          setGraphData(chartRes.data['Time Series (5min)']);
         setLoading(false);
       } catch (error) {
@@ -57,13 +52,10 @@ export default function ProductScreen({ route }) {
       </View>
     );
   }
-
   return (
-    
     <>
     <ScrollView style={[styles.container,{backgroundColor:theme.background}]}>
-      
-      <TopBar title={'ProductScreen'} icon={'bookmark'} inWatchlist={inWatchlist} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
+      <TopBar title={'ProductScreen'} icon={'bookmark'} symbol={symbol} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
       <View style={styles.header}>
         <Image
           source={{

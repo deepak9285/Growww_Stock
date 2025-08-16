@@ -7,9 +7,7 @@ export const colors = {
   danger: '#E84545',
   border: '#233044',
   subtext: '#777777',
-
 };
-
 export const colorMode = {
   light: {
     background: '#fff',
@@ -29,7 +27,6 @@ export const colorMode = {
   },
 };
 
-// Spacing scale
 export const spacing = {
   xs: 6,
   sm: 10,

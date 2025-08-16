@@ -69,7 +69,6 @@ export default function WatchlistsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   // backgroundColor: colors.background || '#fff',
     padding: spacing.lg,
   },
   title: {

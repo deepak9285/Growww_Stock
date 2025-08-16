@@ -2,6 +2,8 @@
 
 import { create } from 'zustand';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 type Watchlist = { id: string; name: string; symbols: string[]; createdAt: number };
 
@@ -19,10 +21,8 @@ const generateId = () => {
 };
 
 const STORAGE_KEY = 'WATCHLISTS_V1';
-
 export const useWatchlists = create<State>((set, get) => ({
   lists: [],
-
   createList: (name) => {
     const trimmedName = name.trim();
     if (!trimmedName) {
@@ -37,7 +37,6 @@ export const useWatchlists = create<State>((set, get) => ({
       Alert.alert('Duplicate Watchlist', 'A watchlist with this name already exists.');
       return;
     }
-
     set((state) => ({
       lists: [
         ...state.lists,
@@ -45,7 +44,6 @@ export const useWatchlists = create<State>((set, get) => ({
       ],
     }));
   },
-
   addSymbol: (listId, symbol) =>
     set((state) => ({
       lists: state.lists.map((l) => {
@@ -59,7 +57,6 @@ export const useWatchlists = create<State>((set, get) => ({
         return l;
       }),
     })),
-
   removeSymbol: (listId, symbol) =>
     set((state) => ({
       lists: state.lists.map((l) =>
@@ -78,7 +75,6 @@ export const useWatchlists = create<State>((set, get) => ({
     }
   },
 }));
-
 useWatchlists.subscribe(async (state) => {
   await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(state.lists));
 });

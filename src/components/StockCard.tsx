@@ -5,7 +5,7 @@ import { ThemeContext } from '../contexts/themeContext';
 export type StockCardProps = {
   symbol: string;
   price: number;
-  changePercent: number; // + or -
+  changePercent: number; 
   onPress?: () => void;
 };
 

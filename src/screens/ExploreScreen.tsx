@@ -35,8 +35,8 @@ export default function ExploreScreen() {
     },
     [nav]
   );
-  const Cache_ttl=6*60*1000;
- const url='https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=demo';
+ const Cache_ttl=6*60*1000;
+ const url='https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=0891QCPUCG9GPJTT';
 
 
   const fetchData = async () => {
@@ -62,7 +62,6 @@ export default function ExploreScreen() {
         timestamp:now,
       }));
     } catch (err) {
-      console.log('Error fetching top movers:', err);
       const stored=await AsyncStorage.getItem(url);
       if(stored){
         const {data}=JSON.parse(stored);
@@ -76,7 +75,6 @@ export default function ExploreScreen() {
   };
 
   const fetchSearchResults = async (query: string) => {
-    console.log('query');
     try {
       setIsSearching(true);
       const res = await axios.get(
@@ -109,7 +107,6 @@ export default function ExploreScreen() {
     );
     return (
       <View style={{ width: '48%', backgroundColor:theme.background, marginBottom: spacing.sm }}>
-
         <StockCard
           symbol={item.ticker}
           price={price}
@@ -127,7 +124,7 @@ export default function ExploreScreen() {
     return (
       <>
        <TopBar
-            title="Explore"
+            title="Stocks"
             icon="search"
             inputSearch={InputSearch}
             setInputSearch={setInputSearch}
@@ -143,10 +140,8 @@ export default function ExploreScreen() {
       </>
     );
   }
-
   return (
     <View style={{backgroundColor:theme.background,padding:8}}>
-
     <FlatList
       ListHeaderComponent={
         <>

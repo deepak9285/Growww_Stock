@@ -1,10 +1,5 @@
 import {View, Text} from 'react-native';
-import {
-  LineGraph,
-  GraphPoint,
-  HorizontalAxis,
-  VerticalAxis,
-} from 'react-native-graph';
+import {LineGraph, GraphPoint} from 'react-native-graph';
 import {colors} from '../theme';
 import React, {useMemo} from 'react';
 
@@ -26,11 +21,7 @@ export default function Graph({symbol, GraphData}) {
         style={{width: '100%', height: 300}}
         points={graphPoints}
         animated={false}
-        color={colors.danger}
-        TopAxisLabel={() => <AxisLabel x={max.x} value={max.value} />}
-       BottomAxisLabel={() => <AxisLabel x={min.x} value={min.value} />}
-      >
-      </LineGraph>
+        color={colors.danger}></LineGraph>
     </View>
   );
 }
