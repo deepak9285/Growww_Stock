@@ -10,6 +10,25 @@ export const colors = {
 
 };
 
+export const colorMode = {
+  light: {
+    background: '#fff',
+    text: '#000',
+    primary: '#007bff',
+    danger: '#d9534f',
+    subtext: '#666',
+    card: '#fffff',
+  },
+  dark: {
+    background: '#0D0D0D',
+    text: '#fff',
+    primary: '#1E90FF',
+    danger: '#FF6347',
+    subtext: '#aaa',
+    card: '#fffff',
+  },
+};
+
 // Spacing scale
 export const spacing = {
   xs: 6,

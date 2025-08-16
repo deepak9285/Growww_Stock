@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect,useContext, useState } from 'react';
 import { View, FlatList, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTopMovers } from '../hooks/useTopMovers';
@@ -14,8 +14,12 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import TopBar from '../components/TopBar';
+import {ThemeContext} from '../contexts/themeContext';
+
 
 export default function ExploreScreen() {
+  const {theme}=useContext(ThemeContext);
+
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data, isLoading, isError, refetch, isRefetching } = useTopMovers();
  const [IsLoading,setIsLoading]=useState(false);
@@ -57,11 +61,6 @@ export default function ExploreScreen() {
         data:res?.data,
         timestamp:now,
       }));
-
-
-
-
-
     } catch (err) {
       console.log('Error fetching top movers:', err);
       const stored=await AsyncStorage.getItem(url);
@@ -109,7 +108,8 @@ export default function ExploreScreen() {
       (item.change_percentage || '0').replace('%', '')
     );
     return (
-      <View style={{ width: '48%', marginBottom: spacing.sm }}>
+      <View style={{ width: '48%', backgroundColor:theme.background, marginBottom: spacing.sm }}>
+
         <StockCard
           symbol={item.ticker}
           price={price}
@@ -145,6 +145,8 @@ export default function ExploreScreen() {
   }
 
   return (
+    <View style={{backgroundColor:theme.background,padding:8}}>
+
     <FlatList
       ListHeaderComponent={
         <>
@@ -223,5 +225,6 @@ export default function ExploreScreen() {
         />
       }
     />
+    </View>
   );
 }

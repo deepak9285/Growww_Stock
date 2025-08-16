@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect,useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { colors, spacing } from '../theme';
 import { useWatchlists } from '../store/watchlists';
@@ -7,11 +7,14 @@ import EmptyState from '../components/EmptyState';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
+import { ThemeContext } from '../contexts/themeContext';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 
 export default function WatchlistsScreen() {
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { lists, hydrate } = useWatchlists();
+ const {theme}=useContext(ThemeContext);
 
   useEffect(() => {
     hydrate();
@@ -19,16 +22,19 @@ export default function WatchlistsScreen() {
 
   if (!lists.length) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Watchlists</Text>
+      <View style={[styles.container,{backgroundColor:theme.background}]}>
+
+        <Text style={[styles.title,{color:theme.text}]}>Watchlists</Text>
+
         <EmptyState message="No watchlists yet. Add stocks to watchlists from the product screen." />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Watchlists</Text>
+    <View style={[styles.container,{backgroundColor:theme.background}]}>
+      <Text style={[styles.title,{color:theme.text}]}>Watchlists</Text>
+
      <FlatList
   data={lists}
   keyExtractor={(list) => list.id}
@@ -38,12 +44,18 @@ export default function WatchlistsScreen() {
     <View style={{ flex: 1 }}>
       <TouchableOpacity
         activeOpacity={0.8}
-        style={styles.card}
+        style={[styles.card,{backgroundColor:theme.card,borderColor:'gray'}]}
+
+
         onPress={() => nav.navigate('Watchlist', { item })}
       >
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>{item.name}</Text>
-          <Text style={styles.cardCount}>{item.symbols.length} stocks</Text>
+        <View style={[styles.cardHeader,{backgroundColor:theme.card}]}>
+
+          <Text style={[styles.cardTitle,{color:theme.text}]}>{item.name}</Text>
+
+          <Text style={styles.cardCount}>{item.symbols.length} stock</Text>
+          <MaterialIcons name={'arrow-forward'} size={24} color={theme.text} />
+
         </View>
       </TouchableOpacity>
     </View>
@@ -57,28 +69,21 @@ export default function WatchlistsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background || '#fff',
+   // backgroundColor: colors.background || '#fff',
     padding: spacing.lg,
   },
   title: {
-    color: colors.text || '#000',
     fontSize: 22,
     fontWeight: '800',
     marginBottom: spacing.lg,
   },
   card: {
-  backgroundColor: colors.card || '#fdfdfd',
+  
   borderRadius: 12,
   padding: spacing.md,
   marginBottom: spacing.md,
   borderWidth: 1,
-  borderColor: colors.border || '#e0e0e0',
-  shadowColor: '#000',
-  shadowOpacity: 0.05,
-  shadowOffset: { width: 0, height: 2 },
-  shadowRadius: 4,
-  elevation: 2,
-  alignSelf: 'stretch', // ensures it takes full width
+  alignSelf: 'stretch',
 },
 
   cardHeader: {

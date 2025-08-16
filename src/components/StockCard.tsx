@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { colors, spacing } from '../theme';
-
+import { ThemeContext } from '../contexts/themeContext';
 export type StockCardProps = {
   symbol: string;
   price: number;
@@ -16,6 +16,7 @@ export default function StockCard({
   onPress,
 }: StockCardProps) {
   const isUp = changePercent >= 0;
+  const {theme} = React.useContext(ThemeContext);
   return (
     <Pressable
       onPress={onPress}
@@ -29,7 +30,7 @@ export default function StockCard({
     >
       <Text
         style={{
-          color: colors.text,
+          color: theme.text,
           fontSize: 16,
           fontWeight: '700',
           marginBottom: spacing.xs,

@@ -17,13 +17,8 @@ const AppLayout = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-     
-      <View style={styles.content}>
         {curScreen === 'ExploreScreen' && <ExploreScreen />}
         {curScreen === 'WatchlistsScreen' && <WatchlistsScreen />}
-      </View>
-
-      {/* Navbar */}
       <Navbar currentScreen={curScreen} setCurScreen={setCurScreen} />
     </View>
   );
@@ -33,6 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f9f7f4',
+    
   },
   content: {
     flex: 1,

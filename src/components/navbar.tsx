@@ -1,4 +1,6 @@
-import React from 'react';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import React,{useContext} from 'react';
+import {ThemeContext} from '../contexts/themeContext';
 import {
   View,
   Text,
@@ -11,8 +13,11 @@ import {
 const { width } = Dimensions.get('window');
 
 const Navbar = ({ currentScreen, setCurScreen }: any) => {
+  const {theme}=useContext(ThemeContext);
+
   return (
-    <View style={styles.navBar}>
+    <View style={[styles.navBar]}>
+
       {navItems.map((item) => (
         <TouchableOpacity
           key={item.key}
@@ -25,6 +30,7 @@ const Navbar = ({ currentScreen, setCurScreen }: any) => {
               <View style={styles.innerDot} />
             </View>
           )}
+          <MaterialIcons name={currentScreen === item.key ? item.iconActive : item.iconInactive} size={24} color={currentScreen === item.key ? '#FFD000' : '#909090'} />
           <Text
             style={
               currentScreen === item.key ? styles.activenavText : styles.navText
@@ -42,8 +48,8 @@ const navItems = [
   {
     key: 'ExploreScreen',
     label: 'Stocks',
-    iconActive: 'compass',
-    iconInactive: 'compass-outline',
+    iconActive: 'insights',
+    iconInactive: 'insights',
   },
   {
     key: 'WatchlistsScreen',
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingTop: 15,
+   
     paddingBottom: 5,
     backgroundColor: '#212121',
     borderTopColor: '#eaeaea',
@@ -68,7 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width / 2, // two items, so half width each
+    width: width / 2, 
     paddingVertical: 5,
   },
   activenavText: {

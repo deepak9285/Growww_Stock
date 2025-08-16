@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, StyleSheet, Image, ActivityIndicator, Dimensions } from "react-native";
+import React, { useEffect, useState,useContext } from "react";
+import { View, Text, ScrollView, StyleSheet, Image, ActivityIndicator, Dimensions, TouchableOpacity } from "react-native";
 import axios from "axios";
 import TopBar from "../components/TopBar";
 import { useWatchlists } from "../store/watchlists";
 
 import WatchlistModal from "../components/WatchlistModel";
+import {ThemeContext} from '../contexts/themeContext';
+import { useNavigation } from "@react-navigation/native";
+
 import Graph from "../components/Graph";
+import MaterialIcons from "@react-native-vector-icons/material-icons";
  
 export default function ProductScreen({ route }) {
   const { symbol } = route.params; 
  const[inWatchlist,setInWatchlist]=useState(false);
    const {isInAnyList}=useWatchlists();
+   const{theme}=useContext(ThemeContext);
 
-  // const inWatchlist = isInAnyList(symbol); 
    useEffect(() => {
     setInWatchlist(isInAnyList(symbol));
   }, [symbol, isInAnyList]);
- console.log("inwatchlist", inWatchlist);
-
+  const nav=useNavigation();
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [slider,setSlider]=useState(false);
@@ -56,9 +59,10 @@ export default function ProductScreen({ route }) {
   }
 
   return (
+    
     <>
-    <ScrollView style={styles.container}>
-      {/* Header */}
+    <ScrollView style={[styles.container,{backgroundColor:theme.background}]}>
+      
       <TopBar title={'ProductScreen'} icon={'bookmark'} inWatchlist={inWatchlist} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
       <View style={styles.header}>
         <Image
@@ -68,38 +72,37 @@ export default function ProductScreen({ route }) {
           style={styles.logo}
         />
         <View style={{ flex: 1 }}>
-          <Text style={styles.title}>{companyData.Name}</Text>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.title,{color:theme.text}]}>{companyData.Name}</Text>
+          <Text style={[styles.subtitle,{color:theme.text}]}>
             {companyData.Symbol}, {companyData.AssetType}
           </Text>
         </View>
         <View style={{ alignItems: "flex-end" }}>
-          <Text style={styles.price}>${companyData.AnalystTargetPrice}</Text>
+          <Text style={[styles.price,{color:theme.text}]}>${companyData.AnalystTargetPrice}</Text>
           <Text style={styles.change}>
             +{(companyData.QuarterlyRevenueGrowthYOY * 100).toFixed(2)}%
           </Text>
         </View>
       </View>
-     <Text style={styles.title}>Stock Price Line Chart</Text>
-     {/* <ChartData data={chartData} width={width - 100} height={250} /> */}
+     <Text style={[styles.title,{color:theme.text}]}>Stock Price Line Chart</Text>
       <Graph symbol={symbol} GraphData={GraphData}/>
-      <Text style={styles.sectionTitle}>About {companyData?.Name}</Text>
-      <Text style={styles.description}>{companyData?.Description}</Text>
+      <Text style={[styles.sectionTitle,{color:theme.text}]}>About {companyData?.Name}</Text>
+      <Text style={[styles.description,{color:theme.text}]}>{companyData?.Description}</Text>
 
 
       <View style={styles.statsGrid}> 
         <View style={{display:"flex",flexDirection:"row",flexWrap:"wrap",justifyContent:'space-between'}}>
-        <Text style={[styles.stat,styles.statSec]}><Text style={styles.statLabel}>Sector:</Text> {companyData?.Sector}</Text>
-        <Text style={[styles.stat,styles.statSec]}><Text style={styles.statLabel}>Industry:</Text> {companyData?.Industry}</Text>
+        <Text style={[styles.stat,styles.statSec,{color:theme.text,backgroundColor:theme.danger}]}><Text style={styles.statLabel}>Sector:</Text> {companyData?.Sector}</Text>
+        <Text style={[styles.stat,styles.statSec,{color:theme.text,backgroundColor:theme.danger}]}><Text style={styles.statLabel}>Industry:</Text> {companyData?.Industry}</Text>
         </View>
-        <Text style={styles.stat}><Text style={styles.statLabel}>52W High:</Text> ${companyData?.["52WeekHigh"]}</Text>
-        <Text style={styles.stat}><Text style={styles.statLabel}>52W Low:</Text> ${companyData?.["52WeekLow"]}</Text>
-        <Text style={styles.stat}><Text style={styles.statLabel}>Market Cap:</Text> ${Number(companyData.MarketCapitalization).toLocaleString()}</Text>
-        <Text style={styles.stat}><Text style={styles.statLabel}>PE Ratio:</Text> {companyData?.PERatio}</Text>
-        <Text style={styles.stat}><Text style={styles.statLabel}>Beta:</Text> {companyData?.Beta}</Text>
-        <Text style={styles.stat}><Text style={styles.statLabel}>Dividend Yield:</Text> {(companyData?.DividendYield * 100).toFixed(2)}%</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>52W High:</Text> ${companyData?.["52WeekHigh"]}</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>52W Low:</Text> ${companyData?.["52WeekLow"]}</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>Market Cap:</Text> ${Number(companyData.MarketCapitalization).toLocaleString()}</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>PE Ratio:</Text> {companyData?.PERatio}</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>Beta:</Text> {companyData?.Beta}</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>Dividend Yield:</Text> {(companyData?.DividendYield * 100).toFixed(2)}%</Text>
 
-        <Text style={styles.stat}><Text style={styles.statLabel}>Profit Margin:</Text> {(companyData.ProfitMargin * 100).toFixed(2)}%</Text>
+        <Text style={[styles.stat,{color:theme.text}]}><Text style={styles.statLabel}>Profit Margin:</Text> {(companyData.ProfitMargin * 100).toFixed(2)}%</Text>
       </View>
   
 
@@ -112,7 +115,7 @@ export default function ProductScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 10 },
+  container: { flex: 1, padding: 10 },
   loader: { flex: 1, justifyContent: "center", alignItems: "center" },
   header: { flexDirection: "row", alignItems: "center", marginBottom: 20 },
   logo: { width: 40, height: 40, borderRadius: 5, marginRight: 10 },
@@ -124,6 +127,6 @@ const styles = StyleSheet.create({
   description: { fontSize: 14, color: "#555", lineHeight: 20 },
   statsGrid: { flexDirection: "row", flexWrap: "wrap", marginTop: 10 ,padding:5,marginBottom:10},
   stat: { width: "50%", fontSize: 14, marginVertical: 5 },
-  statSec:{backgroundColor:"#efded4",gap:5,padding:8,borderRadius:20,color:'red'},
+  statSec:{gap:5,padding:8,borderRadius:20,color:'red'},
   statLabel: { fontWeight: "bold" }
 });
