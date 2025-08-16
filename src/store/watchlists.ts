@@ -1,7 +1,6 @@
 
 
 import { create } from 'zustand';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 
 type Watchlist = { id: string; name: string; symbols: string[]; createdAt: number };

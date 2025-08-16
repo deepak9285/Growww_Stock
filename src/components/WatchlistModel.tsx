@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { colors, spacing } from '../theme';
 import { useWatchlists } from '../store/watchlists';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 type Props = {
   visible: boolean;
@@ -20,7 +21,7 @@ type Props = {
   symbol: string;
 };
 
-export default function WatchlistModal({ visible, setSlider, onClose, symbol }: Props) {
+export default function WatchlistModal({ visible, setInWatchlist,setSlider, onClose, symbol }: Props) {
   const { lists, createList, addSymbol } = useWatchlists();
   const [newListName, setNewListName] = useState('');
 
@@ -33,6 +34,7 @@ export default function WatchlistModal({ visible, setSlider, onClose, symbol }: 
 
   const handleSelectList = (id: string) => {
     addSymbol(id, symbol);
+    setInWatchlist(true);
     onClose();
   };
 
@@ -49,10 +51,14 @@ export default function WatchlistModal({ visible, setSlider, onClose, symbol }: 
       >
         <View style={styles.overlay}>
           <View style={styles.modalContent}>
+            <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+
             <Text style={styles.title}>Add to Watchlist</Text>
             <TouchableOpacity onPress={()=>setSlider(false)}>
-              <Text>Close</Text>
+              <MaterialIcons name="close" size={24} color={colors.text} />
+             
             </TouchableOpacity>
+             </View>
             <View style={styles.createRow}>
               <TextInput
                 placeholder="New watchlist name"
@@ -65,8 +71,6 @@ export default function WatchlistModal({ visible, setSlider, onClose, symbol }: 
                 <Text style={styles.addButtonText}>Add</Text>
               </Pressable>
             </View>
-
-            {/* Existing watchlists */}
             {lists.length > 0 ? (
               <FlatList
                 data={lists}

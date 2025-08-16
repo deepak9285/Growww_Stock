@@ -1,7 +1,7 @@
 import { View, Text,TextInput,StyleSheet ,TouchableOpacity} from 'react-native'
 import React,{useState} from 'react'
 //import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 export default function TopBar({title,icon,inputSearch,setInputSearch,setSlider , inWatchlist,fetchSearchResults}) {
   console.log("inwatchlist",inWatchlist);
@@ -41,12 +41,11 @@ export default function TopBar({title,icon,inputSearch,setInputSearch,setSlider 
       </View>) }
       {icon==="bookmark"&& (
         <TouchableOpacity onPress={()=>setSlider(true)}>
-          {/* <Text>Bookmark</Text> */}
            <MaterialIcons
         name={inWatchlist ? "bookmark" : "bookmark-border"}
         size={24}
-        color={inWatchlist ? "#FFD000" : "#909090"}
-        onPress={() => setSlider(true)} // open modal to manage watchlist
+        color={inWatchlist ? "#28A745" : "#909090"}
+        onPress={() => setSlider(true)} 
       />
         </TouchableOpacity>
       )}

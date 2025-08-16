@@ -149,7 +149,7 @@ export default function ExploreScreen() {
       ListHeaderComponent={
         <>
           <TopBar
-            title="Explore"
+            title="Stocks"
             icon="search"
             inputSearch={InputSearch}
             setInputSearch={setInputSearch}

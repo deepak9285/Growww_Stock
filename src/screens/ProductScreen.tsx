@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { parseStockData } from "../components/ChartData";
 import { View, Text, ScrollView, StyleSheet, Image, ActivityIndicator, Dimensions } from "react-native";
 import axios from "axios";
-import ChartData from "../components/ChartData";
-import { LineChart } from "react-native-chart-kit";
 import TopBar from "../components/TopBar";
 import { useWatchlists } from "../store/watchlists";
 
 import WatchlistModal from "../components/WatchlistModel";
 import Graph from "../components/Graph";
-
-const screenWidth = Dimensions.get("window").width;
  
 export default function ProductScreen({ route }) {
   const { symbol } = route.params; 
+ const[inWatchlist,setInWatchlist]=useState(false);
+   const {isInAnyList}=useWatchlists();
 
-  
-const hydrate = useWatchlists((state) => state.hydrate);
-  const isInAnyList = useWatchlists((state) => state.isInAnyList);
-
-  const inWatchlist = isInAnyList(symbol); // directly read from store
-
-  useEffect(() => {
-    hydrate(); // load AsyncStorage data on mount
-  }, []);
+  // const inWatchlist = isInAnyList(symbol); 
+   useEffect(() => {
+    setInWatchlist(isInAnyList(symbol));
+  }, [symbol, isInAnyList]);
+ console.log("inwatchlist", inWatchlist);
 
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,14 +25,8 @@ const hydrate = useWatchlists((state) => state.hydrate);
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        // Fetch company info
         const res = await axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo`);
-
-      
-
         setCompanyData(res.data);
-
-       
         const chartRes = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo`);
          setGraphData(chartRes.data['Time Series (5min)']);
         setLoading(false);
@@ -72,7 +59,7 @@ const hydrate = useWatchlists((state) => state.hydrate);
     <>
     <ScrollView style={styles.container}>
       {/* Header */}
-      <TopBar title={'ProductScreen'} icon={'bookmark'} isInWatchlist={inWatchlist} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
+      <TopBar title={'ProductScreen'} icon={'bookmark'} inWatchlist={inWatchlist} inputSearch={null} setInputSearch={null} setSlider={setSlider}/>
       <View style={styles.header}>
         <Image
           source={{
@@ -114,11 +101,10 @@ const hydrate = useWatchlists((state) => state.hydrate);
 
         <Text style={styles.stat}><Text style={styles.statLabel}>Profit Margin:</Text> {(companyData.ProfitMargin * 100).toFixed(2)}%</Text>
       </View>
-      {/* <ChartData symbol={symbol} /> */}
+  
 
     </ScrollView>
-    {/* {slider&& (<WatchlistsSlider isVisible={slider} onClose={()=>setSlider(false)} product={"sdf"}  setStatus={true} onWatchlistUpdate={null} />)} */}
-{slider&&<WatchlistModal symbol={symbol}  visible={slider}  setSlider={setSlider} onClose={()=>setSlider(false)} />}
+   {slider&&<WatchlistModal symbol={symbol}  visible={slider} setInWatchlist={setInWatchlist}  setSlider={setSlider} onClose={()=>setSlider(false)} />}
 
 
     </>

@@ -1,11 +1,13 @@
 
 export const colors = {
-  background: '#fffff',  
-  card: '#fffff',        
-  text: '#000000',        
-  success: '#1DB954',     
-  danger: '#E84545',     
-  border: '#233044',    
+  background: '#fffff',
+  card: '#fffff',
+  text: '#000000',
+  success: '#1DB954',
+  danger: '#E84545',
+  border: '#233044',
+  subtext: '#777777',
+
 };
 
 // Spacing scale

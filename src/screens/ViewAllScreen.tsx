@@ -14,10 +14,7 @@ export default function ViewAllScreen({ route, navigation }: Props) {
 
   const ITEMS_PER_PAGE = 10;
   const [page, setPage] = useState(1);
-
-  // Slice the data for current page
   const paginatedData = initialData.slice(0, page * ITEMS_PER_PAGE);
-
   const renderItem = ({ item }: { item: any }) => (
     <StockCard
       symbol={item.symbol || item.ticker}
@@ -28,13 +25,11 @@ export default function ViewAllScreen({ route, navigation }: Props) {
       }
     />
   );
-
   const loadMore = () => {
     if (paginatedData.length < initialData.length) {
       setPage(prev => prev + 1);
     }
   };
-
   return (
     <View style={{ flex: 1, backgroundColor: colors.background, padding: spacing.lg }}>
       <Text
