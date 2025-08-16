@@ -1,13 +1,11 @@
 
 import React, { useCallback, useEffect,useContext, useState } from 'react';
-import { View, FlatList, RefreshControl } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useTopMovers } from '../hooks/useTopMovers';
-import { colors, spacing } from '../theme/index';
+import { spacing } from '../theme/index';
 import SectionHeader from '../components/SectionHeader';
 import StockCard from '../components/StockCard';
 import LoadingSkeleton from '../components/LoadingSkeleton';
-import ErrorState from '../components/ErrorState';
 import EmptyState from '../components/EmptyState';
 import type { RootStackParamList } from '../navigation/RootNavigator';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -21,7 +19,6 @@ export default function ExploreScreen() {
   const {theme}=useContext(ThemeContext);
 
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { data, isLoading, isError, refetch, isRefetching } = useTopMovers();
  const [IsLoading,setIsLoading]=useState(false);
   const [TopGainers, setTopGainers] = useState<any[]>([]);
   const [TopLosers, setTopLosers] = useState<any[]>([]);
@@ -171,13 +168,7 @@ export default function ExploreScreen() {
       numColumns={2}
       columnWrapperStyle={{ justifyContent: 'space-between' }}
       ListEmptyComponent={
-        isLoading ? (
-          <LoadingSkeleton />
-        ) : isError ? (
-          <ErrorState onRetry={refetch} />
-        ) : (
-          <EmptyState message="No data for gainers right now." />
-        )
+        <EmptyState message="No data for gainers right now." />
       }
       ListFooterComponent={
         <>
@@ -199,26 +190,12 @@ export default function ExploreScreen() {
             keyExtractor={(item) => item.ticker}
             numColumns={2}
             columnWrapperStyle={{ justifyContent: 'space-between' }}
-            ListEmptyComponent={
-              isLoading ? (
-                <LoadingSkeleton />
-              ) : isError ? (
-                <ErrorState onRetry={refetch} />
-              ) : (
-                <EmptyState message="No data for losers right now." />
-              )
-            }
+            ListEmptyComponent={<EmptyState message="No data for losers right now." />}
           />
           <View style={{ height: spacing.xl }} />
         </>
       }
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefetching}
-          onRefresh={refetch}
-          tintColor={colors.text}
-        />
-      }
+      
     />
     </View>
   );

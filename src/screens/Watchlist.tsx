@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Dimensions 
 } from 'react-native';
-import { spacing, colors } from '../theme';
+import { spacing } from '../theme';
 import StockCard from '../components/StockCard';
 import React, { useState, useContext } from 'react';
 import { useWatchlists } from '../store/watchlists';
@@ -17,7 +17,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import EmptyState from '../components/EmptyState';
 import { ThemeContext } from '../contexts/themeContext';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width - (spacing.lg * 2); 
