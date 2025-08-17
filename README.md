@@ -1,6 +1,5 @@
 📈 Stock Watchlist App
 
-A React Native application built as part of an assignment for Groww.
 The app allows users to search stocks, view details, manage watchlists, and visualize stock trends in a clean and interactive UI.
 
 This project was bootstrapped using @react-native-community/cli.
@@ -35,24 +34,6 @@ Charting: react-native-chart-kit / react-native-graph
 
 Testing: Jest + React Native Testing Library
 
-📂 Project Structure
-root/
-│── __tests__/              # Test files
-│── android/                # Native Android project (Gradle, Java/Kotlin)
-│── ios/                    # Native iOS project (Xcode, Swift/Obj-C)
-│── assets/                 # App assets (icons, fonts)
-│── src/                    # Main source code
-│   ├── components/         # Reusable UI components (StockCard, Graph, etc.)
-│   ├── screens/            # Screens (Home, Watchlist, StockDetails)
-│   ├── store/              # State management (watchlist store)
-│   ├── theme/              # Colors, spacing, typography
-│   ├── utils/              # Helpers, API functions
-│   └── navigation/         # RootNavigator & stack configs
-│── App.tsx                 # Entry point
-│── index.js                # AppRegistry entry
-│── app.json                # App metadata
-│── package.json            # Dependencies & scripts
-│── metro.config.js         # Metro bundler config
 
 ⚙️ Getting Started
 
