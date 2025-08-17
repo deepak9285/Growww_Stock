@@ -1,77 +1,139 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+📈 Stock Watchlist App
 
-# Getting Started
+A React Native application built as part of an assignment for Groww.
+The app allows users to search stocks, view details, manage watchlists, and visualize stock trends in a clean and interactive UI.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+This project was bootstrapped using @react-native-community/cli.
 
-## Step 1: Start the Metro Server
+🚀 Features
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+🔍 Search Stocks – Find stocks by name or symbol.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+⭐ Watchlist – Add/remove stocks to a personalized watchlist.
 
-```bash
+📊 Stock Charts – Visualize stock price trends with interactive graphs.
+
+📰 Stock Details – View key details and performance data.
+
+⚡ Real-time Updates – Fetch and display latest stock data.
+
+🎨 Responsive UI – Optimized for both iOS and Android.
+
+🛠 Tech Stack
+
+Framework: React Native (TypeScript)
+
+Navigation: React Navigation
+
+State Management: Zustand / Context API
+
+UI Components: Custom + React Native Elements
+
+Data Fetching: Axios / Fetch API
+
+Charting: react-native-chart-kit / react-native-graph
+
+Testing: Jest + React Native Testing Library
+
+📂 Project Structure
+root/
+│── __tests__/              # Test files
+│── android/                # Native Android project (Gradle, Java/Kotlin)
+│── ios/                    # Native iOS project (Xcode, Swift/Obj-C)
+│── assets/                 # App assets (icons, fonts)
+│── src/                    # Main source code
+│   ├── components/         # Reusable UI components (StockCard, Graph, etc.)
+│   ├── screens/            # Screens (Home, Watchlist, StockDetails)
+│   ├── store/              # State management (watchlist store)
+│   ├── theme/              # Colors, spacing, typography
+│   ├── utils/              # Helpers, API functions
+│   └── navigation/         # RootNavigator & stack configs
+│── App.tsx                 # Entry point
+│── index.js                # AppRegistry entry
+│── app.json                # App metadata
+│── package.json            # Dependencies & scripts
+│── metro.config.js         # Metro bundler config
+
+⚙️ Getting Started
+
+Note: Make sure you have completed the React Native - Environment Setup instructions till "Creating a new application" step, before proceeding.
+
+Step 1: Start the Metro Server
+
+Metro is the JavaScript bundler for React Native. Run it in one terminal:
+
 # using npm
 npm start
 
 # OR using Yarn
 yarn start
-```
 
-## Step 2: Start your Application
+Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+In a new terminal, run the app on Android or iOS:
 
-### For Android
-
-```bash
-# using npm
+For Android
 npm run android
-
-# OR using Yarn
+# or
 yarn android
-```
 
-### For iOS
-
-```bash
-# using npm
+For iOS
 npm run ios
-
-# OR using Yarn
+# or
 yarn ios
-```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+If everything is set up correctly, your app will run in the Android Emulator or iOS Simulator.
+(You can also run it directly from Android Studio or Xcode.)
 
-## Step 3: Modifying your App
+Step 3: Modifying your App
 
-Now that you have successfully run the app, let's modify it.
+Open App.tsx and edit some code.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+For Android: Press <kbd>R</kbd> twice or open Developer Menu (<kbd>Ctrl</kbd>+<kbd>M</kbd> on Windows/Linux, <kbd>Cmd</kbd>+<kbd>M</kbd> on macOS).
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+For iOS: Press <kbd>Cmd</kbd>+<kbd>R</kbd> in the Simulator.
 
-## Congratulations! :tada:
+📱 Screenshots
 
-You've successfully run and modified your React Native App. :partying_face:
 
-### Now what?
+	
+	
+	
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+⚠️ Replace the assets/screenshots/*.png paths with actual screenshots from your project.
 
-# Troubleshooting
+🧪 Running Tests
+npm test
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+❓ Troubleshooting
 
-# Learn More
+If bundler fails:
 
-To learn more about React Native, take a look at the following resources:
+npm start --reset-cache
 
+
+If emulator doesn’t start: check your Android/iOS setup in the React Native Troubleshooting Guide.
+
+📚 Learn More
+
+React Native Docs
+
+Integration with existing apps
+
+React Navigation
+
+Metro Bundler
+
+🙌 Acknowledgements
+
+Groww for the assignment challenge
+
+React Native Community
+
+Chart Libraries
+
+✨ Congratulations! You now have a fully working Stock Watchlist App 🎉
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
 - [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
