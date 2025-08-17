@@ -124,8 +124,6 @@ export default function ProductScreen({ route }) {
 
     </ScrollView>
    {slider&&<WatchlistModal symbol={symbol}  visible={slider} setInWatchlist={setInWatchlist}  setSlider={setSlider} onClose={()=>setSlider(false)} />}
-
-
     </>
   );
 }
