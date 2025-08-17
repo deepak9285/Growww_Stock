@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   actionButton: {
     padding: spacing.sm,
     borderRadius: 8,
-    marginLeft: spacing.xs, // Replaced gap with margin
+    marginLeft: spacing.xs, 
   },
   content: {
     flex: 1,

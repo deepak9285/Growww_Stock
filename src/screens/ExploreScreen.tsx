@@ -39,7 +39,6 @@ export default function ExploreScreen() {
     try {
       setIsLoading(true);
       let cachedData=await AsyncStorage.getItem(url);
-      console.log("cachedData",cachedData);
       if(cachedData){
         const {data,timestamp}=JSON.parse(cachedData);
         if(now-timestamp<Cache_ttl){
@@ -68,7 +67,6 @@ export default function ExploreScreen() {
       setIsLoading(false);
     }
   };
-
   const fetchSearchResults = async (query: string) => {
     try {
       setIsSearching(true);
@@ -77,7 +75,6 @@ export default function ExploreScreen() {
           query
         )}&apikey=0891QCPUCG9GPJTT`
       );
-      console.log("res",res);
       const matches = res?.data?.bestMatches?.map((match: any) => ({
         ticker: match['1. symbol'],
         name: match['2. name'],
