@@ -5,7 +5,7 @@ import TopBar from "../components/TopBar";
 import { useWatchlists } from "../store/watchlists";
 import WatchlistModal from "../components/WatchlistModel";
 import {ThemeContext} from '../contexts/themeContext';
-import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Graph from "../components/Graph";
 export default function ProductScreen({ route }) {
   const { symbol } = route.params; 
@@ -15,25 +15,49 @@ export default function ProductScreen({ route }) {
    useEffect(() => {
     setInWatchlist(isInAnyList(symbol));
   }, [symbol, isInAnyList]);
-  const nav=useNavigation();
   const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [slider,setSlider]=useState(false);
   const [GraphData,setGraphData]=useState(null);
+
+  const url=`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=0891QCPUCG9GPJTT`;
+  const url2=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=0891QCPUCG9GPJTT`;
+
+ const Cache_ttl=6*60*1000;
   useEffect(() => {
     const fetchDetails = async () => {
+      const now=Date.now();
       try {
-        const res = await axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=0891QCPUCG9GPJTT`);
+        let cachedData=await AsyncStorage.getItem(url);
+        let cachedData2=await AsyncStorage.getItem(url2);
+        if(cachedData){
+          const {data,timestamp}=JSON.parse(cachedData);
+          const {data:data2}=JSON.parse(cachedData2);
+          if(now-timestamp<Cache_ttl ){ 
+            setCompanyData(data);
+            setGraphData(data2['Time Series (5min)']);
+            setLoading(false);
+            return;
+          }
+        }
+        const res = await axios.get(url);
         setCompanyData(res.data);
-        const chartRes = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=0891QCPUCG9GPJTT`);
-         setGraphData(chartRes.data['Time Series (5min)']);
+        await AsyncStorage.setItem(url,JSON.stringify({
+        data:res?.data,
+        timestamp:now,
+      }));
+        const chartRes = await axios.get(url2);
+        setGraphData(chartRes.data['Time Series (5min)']);
+        await AsyncStorage.setItem(url2,JSON.stringify({
+          data:chartRes?.data,
+          timestamp:now,
+        }));
         setLoading(false);
       } catch (error) {
         console.error(error);
         setLoading(false);
       }
     };
-
     fetchDetails();
   }, [symbol]);
 

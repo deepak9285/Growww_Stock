@@ -32,15 +32,14 @@ export default function ExploreScreen() {
     },
     [nav]
   );
- const Cache_ttl=6*60*1000;
+ const Cache_ttl=10*60*1000;
  const url='https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=0891QCPUCG9GPJTT';
-
-
   const fetchData = async () => {
     const now=Date.now();
     try {
       setIsLoading(true);
       let cachedData=await AsyncStorage.getItem(url);
+      console.log("cachedData",cachedData);
       if(cachedData){
         const {data,timestamp}=JSON.parse(cachedData);
         if(now-timestamp<Cache_ttl){
@@ -49,7 +48,6 @@ export default function ExploreScreen() {
           setIsLoading(false);
           return;
         }
-
       }
       const res = await axios.get(url);
       setTopGainers(res?.data?.top_gainers || []);
@@ -79,6 +77,7 @@ export default function ExploreScreen() {
           query
         )}&apikey=0891QCPUCG9GPJTT`
       );
+      console.log("res",res);
       const matches = res?.data?.bestMatches?.map((match: any) => ({
         ticker: match['1. symbol'],
         name: match['2. name'],
@@ -92,6 +91,10 @@ export default function ExploreScreen() {
       setIsSearching(false);
     }
   };
+
+   useEffect(()=>{
+    fetchSearchResults(InputSearch);
+  },[InputSearch])
 
   useEffect(() => {
     fetchData();
@@ -119,7 +122,7 @@ export default function ExploreScreen() {
 
   if (searchResults.length > 0) {
     return (
-      <>
+      <View style={{backgroundColor:theme.background}}>
        <TopBar
             title="Stocks"
             icon="search"
@@ -134,7 +137,7 @@ export default function ExploreScreen() {
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
       />
-      </>
+      </View>
     );
   }
   return (

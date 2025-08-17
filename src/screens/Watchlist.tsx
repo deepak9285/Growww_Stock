@@ -1,4 +1,3 @@
-
 import { 
   View, 
   Text, 
@@ -18,7 +17,6 @@ import EmptyState from '../components/EmptyState';
 import { ThemeContext } from '../contexts/themeContext';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 
-
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width - (spacing.lg * 2); 
 
@@ -28,6 +26,7 @@ export default function Watchlist({ route }) {
   const { removeSymbol } = useWatchlists();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { theme } = useContext(ThemeContext);
+  
   const handleRemove = (sym: string) => {
     setSymbols((prev) => prev.filter((s) => s !== sym));
     removeSymbol(item.id, sym);
@@ -72,7 +71,6 @@ export default function Watchlist({ route }) {
             {symbols.length} stock{symbols.length !== 1 ? 's' : ''}
           </Text>
         </View>
-
       </View>
 
       <View style={styles.content}>
@@ -112,6 +110,7 @@ export default function Watchlist({ route }) {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -147,11 +146,12 @@ const styles = StyleSheet.create({
   },
   headerActions: {
     flexDirection: 'row',
-    gap: spacing.xs,
+    alignItems: 'center',
   },
   actionButton: {
     padding: spacing.sm,
     borderRadius: 8,
+    marginLeft: spacing.xs, // Replaced gap with margin
   },
   content: {
     flex: 1,
@@ -186,12 +186,12 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
     paddingHorizontal: spacing.sm,
     borderRadius: 8,
-    gap: 4,
   },
   removeButtonText: {
     color: '#fff',
     fontSize: 12,
     fontWeight: '600',
+    marginLeft: 4, 
   },
   emptyContainer: {
     flex: 1,
@@ -206,11 +206,11 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     borderRadius: 12,
     marginTop: spacing.lg,
-    gap: spacing.xs,
   },
   addButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+    marginLeft: spacing.xs, 
   },
 });
