@@ -94,4 +94,5 @@ API_KEY=your_api_key_here
 Screenshots and demo video are available in the assets/ folder of the repository.
 
 ## 🎥 Demo Video
-[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](assets/App Video.mp4)
+
+https://github.com/user-attachments/assets/0c170f99-97b6-41bc-8d65-95b7a25f8401
