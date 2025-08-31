@@ -1,6 +1,6 @@
 # 📈 Growww Stock App  
 
-A React Native assignment project for Groww internship — explore, search, and view stock details. 
+Stock app— explore, search, and view stock details. 
 
 ---
 
@@ -17,7 +17,7 @@ A React Native assignment project for Groww internship — explore, search, and 
 ---
 
 ## 📂 Folder Structure
-src/
+```src/
 ├── components/ # Reusable UI components
 │ ├── ErrorState.tsx # Error UI component
 │ ├── Graph.tsx # Stock graph component
@@ -52,7 +52,7 @@ src/
 │ └── index.js # Theme configuration (colors, fonts)
 │
 └── App.tsx # Entry point
-
+```
 ---
 
 ## 🚀 Features
