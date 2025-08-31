@@ -1,40 +1,97 @@
-This assignment covers all functional requirements.
-In a production app, I would also add optimizations like selective socket subscriptions, encrypted local storage, and batching updates — but for the scope of this assignment, I’ve focused on correctness and core functionality.
+# 📈 Growww Stock App  
 
+A React Native assignment project for Groww internship — explore, search, and view stock details. 
 
+---
 
+## 🛠️ Tech Stack
+- **Language**: TypeScript  
+- **UI**: React Native + React Native Paper (for UI components)  
+- **Architecture**: MVC(Modal-View-Controller) 
+- **State Management**: Zustand(for saving stocks in watchlist) + React Context API(for dark mode)  
+- **Navigation**: React Navigation (stack navigator)  
+- **Data Fetching**: Axios (REST APIs)  
+- **Storage**: AsyncStorage (local persistence) + api caching in the local storage 
+- **Charts**: react-native-graph  
 
+---
 
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [@react-native-community/cli](https://github.com/react-native-community/cli). 
-# Getting Started >**Note**: 
-Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 📂 Folder Structure
+src/
+├── components/ # Reusable UI components
+│ ├── ErrorState.tsx # Error UI component
+│ ├── Graph.tsx # Stock graph component
+│ ├── LoadingSkeleton.tsx # Skeleton loader for better UX
+│ ├── navbar.tsx # Navigation bar component
+│ ├── SectionHeader.tsx # Common section header
+│ ├── StockCard.tsx # Stock item card
+│ ├── TopBar.tsx # Top navigation bar
+│ └── WatchlistModel.tsx # Modal for watchlist management
+│
+├── config/
+│ └── env.ts # API keys & environment variables
+│
+├── contexts/
+│ └── themeContext.tsx # Theme provider (light/dark)
+│
+├── navigation/
+│ └── RootNavigator.tsx # Root navigation setup
+│
+├── screens/
+│ ├── AppLayout.tsx # App layout with navigation
+│ ├── ExploreScreen.tsx # Explore trending stocks
+│ ├── ProductScreen.tsx # Stock detail screen
+│ ├── ViewAllScreen.tsx # View all stocks/search results
+│ ├── Watchlist.tsx # Watchlist screen
+│ └── WatchlistsScreen.tsx # Multiple watchlists management
+│
+├── store/
+│ └── watchlists.ts # State management for watchlists
+│
+├── theme/
+│ └── index.js # Theme configuration (colors, fonts)
+│
+└── App.tsx # Entry point
 
-## Step 1: Start the Metro Server First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native. To start Metro, run the following command from the _root_ of your React Native project:
+---
+
+## 🚀 Features
+- 🔍 Search for stocks 
+- 📊 View stock details with charts  
+- ⭐ Add/remove stocks from watchlist  
+- 📈 Explore top gainers/losers  
+- 👤 Basic portfolio overview  
+- ⏳ Persistent recent searches using AsyncStorage  
+
+---
+
+## ⚡ Future Improvements
+- Optimize FlatList with virtualization for large stock lists  
+- Secure storage for sensitive user data using **react-native-mmkv**  
+- Offline mode with request queue replay on connectivity restore  
+- Unit tests with Jest + React Native Testing Library  
+
+---
+
+## ▶️ How to Run
+1. Clone the repo  
+2. Install dependencies:  
+   ```bash
+   npm install
+   # or
+   yarn install
+Run the app:
+
 bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-## Step 2: Start your Application Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app: ### For Android
-bash
-# using npm
+Copy code
 npm run android
-
-# OR using Yarn
-yarn android
-### For iOS
-bash
-# using npm
+# or
 npm run ios
+(Optional) Add your API key in .env as:
 
-# OR using Yarn
-yarn ios
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly. This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively. 
+API_KEY=your_api_key_here
+📸 Screenshots & Demo
+Screenshots and demo video are available in the assets/ folder of the repository.
 
-## Step 3: Modifying your App Now that you have successfully run the app, let's modify it. 
-
-1. Open App.tsx in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes! For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-3.
-4. ## Congratulations! :tada: You've successfully run and modified your React Native App. :partying_face: ### Now what? - If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps). - If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started). # Troubleshooting If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page. # Learn More To learn more about React Native, take a look at the following resources: this is old readme combine both with more enhanced version
+## 🎥 Demo Video
+[![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](assets/App Video.mp4)
