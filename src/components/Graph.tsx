@@ -6,7 +6,6 @@ import React, {useMemo} from 'react';
 export default function Graph({symbol, GraphData}) {
   const graphPoints: GraphPoint[] = useMemo(() => {
     if (!GraphData) return [];
-
     return Object.entries(GraphData)
       .map(([datetime, data]) => ({
         date: new Date(datetime),

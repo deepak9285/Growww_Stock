@@ -18,7 +18,6 @@ const RootNavigator = () => {
       <RootStack.Screen name="Product" component={ProductScreen} />
       <RootStack.Screen name="ViewAll" component={ViewAllScreen} />
       <RootStack.Screen name="Watchlist" component={Watchlist} />
-
     </RootStack.Navigator>
   );
 };
