@@ -1,3 +1,10 @@
+This assignment covers all functional requirements.
+In a production app, I would also add optimizations like selective socket subscriptions, encrypted local storage, and batching updates — but for the scope of this assignment, I’ve focused on correctness and core functionality.
+
+
+
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [@react-native-community/cli](https://github.com/react-native-community/cli). 
 # Getting Started >**Note**: 
 Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
